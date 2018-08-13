@@ -27,8 +27,7 @@ from docopt import docopt
 def process_shapefile(shapefile, iso, iso_details):
     
     #Read in shapefile
-    m_df = gpd.read_file('J:\WORK\\11_geospatial\\05_survey shapefile library'
-                         '\Shapefile directory\\' +  shapefile + '.shp')
+    m_df = gpd.read_file('C:' + shapefile + '.shp')
 
     #Subset shapefile to only the iso3 polygons
     if 'COUNTRY_ID' in m_df.columns:
