@@ -129,9 +129,9 @@ def main(codebook_name):
               'point', 'lat', 'long', 'location_code', 'shapefile']
     
     #Get data
-    df = pd.read_csv('C:/Users/jc528/.spyder-py3/CB_and_SF/' + codebook_name +
+    df = pd.read_csv('C:/' + codebook_name +
                      '.csv', usecols = fields, encoding ='latin-1')
-    cx = pd.read_csv("C:/Users/jc528/.spyder-py3/CB_and_SF/crosswalk1.csv")
+    cx = pd.read_csv("C:/crosswalk1.csv")
     
     #Isolate NIDs with both point and polygon values
     grouped_df = df.groupby('nid')['point'].nunique().reset_index()
