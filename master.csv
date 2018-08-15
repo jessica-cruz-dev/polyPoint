@@ -1,0 +1,11 @@
+iso3,nid,location_name,stage,codebook,pic,problem_info,total_polygons,percent_affected,total_points,row_count,nid_usage
+TLS,20888,Timor-Leste,2a,ADB_DHS,20888prob,20888prob,24,26.09,26,28,0
+MDA,8750,Moldova,3,CDC_RHS,8750prob,8750prob,7,100,70,29,0
+GEO,27494,Georgia,3,CDC_RHS,27494prob,27494prob,23,37.1,35,75,2
+ETH,227133,Ethiopia,1,IPUMS_CENSUS,227133prob,227133prob,15,2.37,16,17,2
+PRT,227180,Portugal,3,IPUMS_CENSUS,227180prob,227180prob,1,3.23,2,2,0
+DJI,3404,Djibouti,1,UNICEF_MICS,3404prob,3404prob,1,100,15,113,6
+KEN,135416,Kenya,1,UNICEF_MICS,135416prob,135416prob,6,100,290,300,5
+ZAF,12101,South Africa,1,WB_LSMS,12101prob,12101prob,9,5.17,11,13,1
+TJK,12489,Tajikistan,2a,WB_LSMS,12489prob,12489prob,3,4.76,11,14,3
+CMR,2017,Cameroon,1,COUNTRY_SPECIFIC,2017prob,2017prob,1,10,1,1,1
