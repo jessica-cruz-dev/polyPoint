@@ -1,0 +1,277 @@
+﻿<!DOCTYPE html>
+<html>
+<!-- Some code borrowed from Mike's brain -->
+<head>
+    <style>
+
+        div.infograph {
+            width: 850px;
+            float: left;
+            padding: 30px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center
+        }
+
+        .summary {
+            box-sizing: border-box;
+            width: 85%;
+            height: 400px;
+            overflow: auto;
+            border-bottom: 5px solid #644a55;
+        }
+
+        .header {
+            padding: 2px;
+            height: 3%;
+            border: 5px solid #644a55;
+        }
+
+        .nid_selection {
+            float: left;
+            padding: 15px;
+            width: 200px;
+            height: 1042px;
+            border: 5px solid #644a55;
+            background-color: #dacdd2;
+        }
+
+        .toggle_hide {
+            float: left;
+            padding: 15px;
+            border: 1px;
+            width: 200px;
+            height: 300px;
+            border: 5px solid #644a55;
+        }
+
+        .histo_view {
+            width: 800px;
+            float: left;
+            padding: 30px;
+            height: 612px;
+        }
+
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            padding: 30px;
+            border: 5px solid #644a55;
+        }
+
+        td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            border: 3px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+            font-size: 20px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        .button {
+            background-color: #644a55;
+            border: none;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            width: 145px;
+            height: 100px;
+        }
+
+        .button2:hover {
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        }
+
+        .drop_down {
+            text-align: right;
+            font-size: 20px;
+            height: 45px;
+            background-color: #644a55;
+            color: white;
+            border: 1px solid #644a55;
+        }
+
+        .drop:hover {
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+        }
+
+        .footer {
+            width: 100%;
+            height: 40px;
+        }
+
+        .axis path, .tick line {
+            fill: none;
+            stroke: #333;
+        }
+    </style>
+
+    <meta charset="utf-8">
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+    <script src="histogram.js"></script>
+    <script type="text/javascript">
+
+        function update_after_select() {
+
+            // NID selected by user
+            var nid = document.getElementById("the_select").value;
+
+            // Option to not view any infograph
+            if (nid == '   ')
+                    nid = '---'
+            var nid_index = -1;
+
+            // Updates infograph for new NID
+            var img_src;
+            img_src = "images/" + nid + "pic.png";
+            $("#the_image").attr("src", img_src);
+
+            // Reads in summary data from jinja2 variable
+            $("#myTable td").remove();
+              var summary_list = {{ dfs }};
+
+            // Displays all affected polygon info for NID in summary section
+            for (y = 0; y < summary_list.length; y++) {
+                row = summary_list[y];
+                for (x = 0; x < row.length; x++) {
+                    if (row[x].nid == nid) {
+                        $('#myTable').append(
+                            '<tr><td>' + row[x].nid +
+                            '</td><td>' + row[x].iso3 +
+                            '</td><td>' + row[x].location_code +
+                            '</td><td>' + row[x].shapefile +
+                            '</td><td>' + row[x].percent_point +
+                            '</td><td>' + row[x].point_count +
+                            '</td><td>' + row[x].polygon_count +
+                            '</td><td>' + row[x].point_geospatial_ids +
+                            '</td><td>' + row[x].polygon_geospatial_ids +
+                            '</td>');
+
+                        // Matches summary list index to histogram data list index
+                        nid_index = y;
+                    }
+                }
+            }
+
+            // Read in new histogram data for selected NID
+            var newData;
+            var hdata = {{ hist_list | tojson }};
+
+            // Determines to display blank picture or update histogram
+            if (nid_index == -1)
+                newData = []
+            else
+                newData = hdata[nid_index]
+
+            // Redraw histogram for new data
+            chart.setData(newData);
+            d3.select(window).on('resize', function () {
+                chart.draw();
+            });
+        }
+
+
+        function InitialzePageAfterLoad() {
+
+            // Initialize blank histogram chart
+            var chart = new Chart({
+                element: document.querySelector('.chart-container'),
+                data: [],
+                bins: 20
+            })
+
+            // Iitializing global variables
+            window.chart = chart;
+            window.hdata = hdata;
+            window.summary_list = summary_list;
+        }
+
+        function toggleDisplays(num) {
+
+            // Determines to update the histogram view or summary view
+            var x;
+            if (num == 2)
+                x = document.getElementById("summary_display");
+            else
+                x = document.getElementById("histogram_display");
+
+            // Hides selected div from view
+            if (x.style.display == "none")
+                x.style.display = "block";
+            else
+                x.style.display = "none";
+        }
+
+    </script>
+</head>
+<body onload="InitialzePageAfterLoad()">
+    <div class="header">
+        <h3 style="font-size:50px;">NIDs with Point/Polygon Overlap</h3>
+    </div>
+
+    <div class="nid_selection">
+        <h1>Select NID</h1>
+        <br>
+        <select class="drop_down drop" id="the_select" style="width:150px;" onchange="update_after_select()">
+            {% for nid in problem_nids %}
+            <option value="{{nid}}">{{nid}}</option>
+            {% endfor %}
+        </select>
+        <br><br><br><br><br><br><br><br>
+        <button class="button button2" id="graph" onclick="toggleDisplays(1)">Toggle Histogram</button>
+        <br><br><br><br>
+        <button class="button button2" onclick="toggleDisplays(2)">Toggle Summary Report</button>
+    </div>
+
+    <div class="infograph">
+        <h1> Infographic Map</h1>
+        <img id="the_image" src="images/---pic.png" width="800" height="500" />
+    </div>
+
+    <div class="histo_view" id="histogram_display">
+        <h1>Count of Affected Polygons by Point Percentage</h1>
+        <div class="chart-container"></div>
+    </div>
+
+    <div class="summary" id="summary_display">
+        <h1>Summary Report</h1>
+        <table style="width:100%" id="myTable">
+            <th>NID </th>
+            <th>Iso3 </th>
+            <th>Location Code</th>
+            <th>Shapefile</th>
+            <th>Point Percentage</th>
+            <th>Point Count</th>
+            <th>Polygon Count</th>
+            <th>Point Geospatial IDs</th>
+            <th>Polygon Geospatial IDs</th>
+            <tbody>
+                <!--looping through javascript objects here-->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
