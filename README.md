@@ -1,4 +1,6 @@
-The purpose of the ```Polygon/Point Overlap Detection Tool``` is to detect when spatial point and polygon entries overlap for the same NID. A codebook from the geospatial directory is entered and (if applicable) a list of affected NIDs are returned along with infographs and actionable insights for analysts to use to remedy the issue. 
+# Polygon/Point Overlap Detection Tool
+
+The purpose of the tool is to detect when spatial point and polygon entries overlap for the same NID. A codebook from the geospatial directory is entered and (if applicable) a list of affected NIDs are returned along with infographs and actionable insights for analysts to use to remedy the issue. 
 
 ## Getting Started
 
