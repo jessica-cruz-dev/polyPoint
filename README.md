@@ -2,12 +2,6 @@ The purpose of the ```Polygon/Point Overlap Detection Tool``` is to detect when 
 
 ## Getting Started
 
-### Prerequisites
-//Things you need to install software and how to install them
-```
-examples
-```
-
 ### Installing
 //Step by step series of examples that tell you how to get a development env running
 
@@ -21,7 +15,9 @@ examples
 ```
 ## Running the tests
 //Explain how to run automated tests for this system
-
+```
+pytest enter
+```
 ### Break down end to end tests
 // Explain what these tests test and why
 ```
