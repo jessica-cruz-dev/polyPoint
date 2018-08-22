@@ -1,5 +1,6 @@
 /* 
- Some code borrowed from https://github.com/frankcleary/mpg/blob/master/mpg.js 
+ Some code borrowed from:
+ https://github.com/frankcleary/mpg/blob/master/mpg.js 
 */
 
 var Chart = function (opts) {
@@ -13,7 +14,6 @@ var Chart = function (opts) {
     // Create chart
     this.draw();
 }
-
 
 Chart.prototype.draw = function () {
 
@@ -30,7 +30,8 @@ Chart.prototype.draw = function () {
 
     // Appending to a <g> element
     this.plot = svg.append('g')
-        .attr("transform", "translate(" + this.padding + "," + this.padding + ")");
+        .attr("transform", "translate(" + this.padding + "," +
+            this.padding + ")");
 
     // Create all scales and bins
     this.createXScale();
@@ -50,11 +51,11 @@ Chart.prototype.draw = function () {
     // Append axis to <g> element
     this.plot.append("g")
         .attr("class", "x axis")
-        .attr("transform", "translate(0," + this.height + ")")
+        .attr("transform", "translate(0," + this.height + ")")                 
         .call(xAxis)
         .selectAll("text")
         .attr("transform", "translate( 0 ," + -4 + ")");
-
+  
     // Draw the bars
     this.plot.selectAll('rect')
         .style('fill', this.color);
@@ -69,7 +70,6 @@ Chart.prototype.createXScale = function () {
         .range([0, this.width]);
 }
 
-
 Chart.prototype.generateHist = function () {
 
     // Generate a histogram w/ uniformly-spaced bins.
@@ -78,14 +78,28 @@ Chart.prototype.generateHist = function () {
         (this.data);
 }
 
-
 Chart.prototype.drawHist = function () {
+
+    // Holds the counts of every element in array
+    const counter = new Map([...new Set(this.data)].map(x =>
+                    [x, this.data.filter(y => y === x).length]));              
+
+    // Changes the y-scal according to max height of data
+    if (counter.get(.5) > 20)
+        upper_bound = counter.get(.5)
+    else 
+        upper_bound = 20
+
+    // Sets up new Y Scale
+     y = d3.scale.linear()
+     .domain([0, upper_bound])
+     .range([this.height, 0]);
 
     // Shorthand variables
     var h = this.height,
         w = this.width,
         x = this.xScale,
-        y = this.yScale,
+        //y = this.yScale,
         bin_width = 30;
 
     // Display y-axis counts as integers
@@ -97,7 +111,10 @@ Chart.prototype.drawHist = function () {
 
     // Performs all the cool D3 movement between data
     hist.transition()
-        .attr("transform", function (d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; })
+        .attr("transform", function (d) {
+            return "translate(" + x(d.x) +
+                "," + y(d.y) + ")";
+        })
         .each(function () {
 
             //update the bars
@@ -112,13 +129,19 @@ Chart.prototype.drawHist = function () {
                 .transition()
                 .attr("x", bin_width / 2)
                 .attr("y", -14)
-                .text(function (d) { return d.y != 0 ? formatCount(d.y) : ""; });
+                .text(function (d) {
+                    return d.y != 0 ?
+                        formatCount(d.y) : "";
+                });
         });
 
     // Draw all new values
     hist.enter().append("g")
         .attr("class", "bar")
-        .attr("transform", function (d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; })
+        .attr("transform", function (d) {
+            return "translate(" + x(d.x) +
+                "," + y(d.y) + ")";
+        })
         .each(function () {
 
             //draw the bars
@@ -140,7 +163,6 @@ Chart.prototype.drawHist = function () {
     hist.exit()
         .remove()
 }
-
 
 Chart.prototype.setData = function (newData) {
 
