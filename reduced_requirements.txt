@@ -20,8 +20,7 @@ geopandas=0.3.0=py35_0
     shapely
     six
     sqlalchemy
-
-
+    
 shapely=1.6.4=py35h2a969d5_0
     geos >=3.6.2,<3.6.3.0a0
     numpy >=1.14.1,<2.0a0
