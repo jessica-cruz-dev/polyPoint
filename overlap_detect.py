@@ -32,15 +32,15 @@ import os
 
 def main(args):
 
-    # Assigning data to be outputted to current working directory 
+    # Assigning data to be outputted to current working directory
     output_dir = os.getcwd() + '\\'
 
     # Assigning input data directory based on user input
     if args['--input_dir'] is None:
         codebook_file_path = 'J:/WORK//11_geospatial//05_survey shape'\
-        'file library/codebooks//'
+            'file library/codebooks//'
         shapefile_file_path = 'J:/WORK//11_geospatial//05_survey shape'\
-        'file library/Shapefile directory//'
+            'file library/Shapefile directory//'
     else:
         codebook_file_path = args['--input_dir']
         shapefile_file_path = args['--input_dir']
@@ -59,7 +59,6 @@ def main(args):
 
     # Coordinate reference system used for projections
     crs = {'init': 'epsg:4326'}
-    
 
     # Initilizing encoding
     encoding = 'latin-1'
@@ -67,7 +66,7 @@ def main(args):
     # Directory of entered codebook
     file_path = codebook_file_path + args['<codebook_name>'] + '.csv'
 
-    # Validating codebook file path 
+    # Validating codebook file path
     file = Path(file_path)
     try:
         file.resolve()
@@ -150,7 +149,7 @@ def main(args):
                 # and subsets size if applicable
                 m_df = process_shapefile(shapefile, iso, iso3_metadata,
                                          shapefile_file_path)
-  
+
                 # Validating shapefile dataframe
                 if type(m_df) is bool:
                     return
@@ -291,7 +290,7 @@ def plot_figure(final_polys, nid, iso, iso3_metadata, final_points, poly_join,
     plt.savefig(buf, format='png')
     buf.seek(0)
     im = Image.open(buf)
-    
+
     # output figure as png infograph
     im.save(output_dir + iso + nid + shapefile + 'pic.png')
 
