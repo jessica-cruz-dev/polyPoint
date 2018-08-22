@@ -59,6 +59,7 @@ def main(args):
 
     # Coordinate reference system used for projections
     crs = {'init': 'epsg:4326'}
+    
 
     # Initilizing encoding
     encoding = 'latin-1'
