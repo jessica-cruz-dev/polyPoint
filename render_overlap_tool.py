@@ -36,3 +36,4 @@ output_template = tmpl.render(nid_list=problem_nids, file_list=file_names,
 # Generate static webpage
 with open('file_path...', 'w') as f:
     f.write(output_template)
+ 
