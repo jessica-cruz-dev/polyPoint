@@ -4,14 +4,17 @@
 Usage:
     overlap_detect.py <codebook_name>
     overlap_detect.py <codebook_name> [--input_dir=<file_path>]
+    overlap_detect.py [--runall] (--output_dir=<file_path>)
     overlap_detect.py (-h | --help)
     overlap_detect.py (-v | --version)
 
 Options:
-    <codebook_name>            Codebook to be processed
-    --input_dir=<file_path>    Overwriting Data Input Directory
-    -h --help                  Show Usage and Options
-    -v --version               Show Version
+    <codebook_name>              Ex. ADB_DHS
+    --input_dir=<file_path>      Specify a different input directory
+    --output_dir=<file_path>     Specify a different output directory
+    --runall                     Process all codebooks in J: drive
+    -h --help                    Show Usage and Options
+    -v --version                 Show Version
 """
 
 import geopandas as gpd
@@ -25,6 +28,7 @@ from descartes import PolygonPatch
 from docopt import docopt
 from pathlib import Path
 from PIL import Image
+import glob
 import re
 import io
 import os
@@ -32,8 +36,13 @@ import os
 
 def main(args):
 
-    # Assigning data to be outputted to current working directory
-    output_dir = os.getcwd() + '\\'
+    print(os.getcwd())
+    
+    # Assigning output data directory based on user input
+    if args['--output_dir'] is None:  # Current working directory
+        output_dir = os.getcwd() + '//'
+    else:
+        output_dir = args['--output_dir'] + '//'
 
     # Assigning input data directory based on user input
     if args['--input_dir'] is None:
@@ -42,8 +51,8 @@ def main(args):
         shapefile_file_path = 'J:/WORK//11_geospatial//05_survey shape'\
             'file library/Shapefile directory//'
     else:
-        codebook_file_path = args['--input_dir']
-        shapefile_file_path = args['--input_dir']
+        codebook_file_path = args['--input_dir'] + '//'
+        shapefile_file_path = args['--input_dir'] + '//'
 
     # Initializing column values for input and output dataframe
     labels = ['nid', 'iso3', 'location_code', 'shapefile', 'point_count',
@@ -211,7 +220,9 @@ def main(args):
                 overlap_summary(labels, point_join, poly_join, counter, nid,
                                 iso, shapefile, output_dir)
 
-    print('\n\nInfograph(s) and Summary Report(s) outputted to  ' + output_dir)
+    if args['--runall'] is False:
+        print('\n\nInfograph(s) and Summary Report(s) outputted to  ' +
+              output_dir)
 
 
 def process_shapefile(shapefile, iso, iso3_metadata, shapefile_file_path):
@@ -324,9 +335,29 @@ def overlap_summary(labels, point_join, poly_join, counter, nid, iso,
         problem_df = pd.concat([problem_df, new_entry])
 
     # Outputs summary as csv
-    pd.to_csv(output_dir + iso + nid + shapefile + 'doc.csv', index=False)
+    problem_df.to_csv(output_dir + iso + nid + shapefile + 'doc.csv',
+                      index=False)
 
 
 if __name__ == '__main__':
+    # Receive command line arguments
     arguments = docopt(__doc__, version='Overlap 1.0.1')
-    main(arguments)
+
+    if arguments['--runall']:
+        # Grab all codebook names from J Drive
+        os.chdir('J:/WORK//11_geospatial//05_survey shapefile'
+                 'library/codebooks//')
+        file_names = [x[:-4] for x in glob.glob('*.csv')]
+
+        # Loop through and process all codebooks
+        for codebook_name in file_names:
+            arguments['<codebook_name>'] = codebook_name
+            main(arguments)
+
+        print('\n\nInfograph(s) and Summary Report(s) outputted to  '
+              + arguments['--output_dir'])
+        
+    elif arguments['<codebook_name>']:
+        main(arguments)
+    else:
+        print(arguments)
