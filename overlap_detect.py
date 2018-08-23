@@ -2,17 +2,16 @@
 """OVERLAP CLI
 
 Usage:
-    overlap_detect.py <codebook_name>
-    overlap_detect.py <codebook_name> [--input_dir=<file_path>]
-    overlap_detect.py [--runall] (--output_dir=<file_path>)
+    overlap_detect.py <codebook_name> [--input_dir=<file_path>] [--output_dir=<file_path>]
+    overlap_detect.py --runall [--input_dir=<file_path>] [--output_dir=<file_path>]
     overlap_detect.py (-h | --help)
     overlap_detect.py (-v | --version)
 
 Options:
     <codebook_name>              Ex. ADB_DHS
+    --runall                     Processes all codebooks
     --input_dir=<file_path>      Specify a different input directory
     --output_dir=<file_path>     Specify a different output directory
-    --runall                     Process all codebooks in J: drive
     -h --help                    Show Usage and Options
     -v --version                 Show Version
 """
@@ -28,6 +27,7 @@ from descartes import PolygonPatch
 from docopt import docopt
 from pathlib import Path
 from PIL import Image
+import sys
 import glob
 import re
 import io
@@ -36,13 +36,14 @@ import os
 
 def main(args):
 
-    print(os.getcwd())
+
     
     # Assigning output data directory based on user input
     if args['--output_dir'] is None:  # Current working directory
-        output_dir = os.getcwd() + '//'
+        output_dir = os.getcwd() + '\\' # neccessary
+        print(output_dir)
     else:
-        output_dir = args['--output_dir'] + '//'
+        output_dir = args['--output_dir'] + '\\' # Dependant if user included \ 
 
     # Assigning input data directory based on user input
     if args['--input_dir'] is None:
@@ -51,8 +52,8 @@ def main(args):
         shapefile_file_path = 'J:/WORK//11_geospatial//05_survey shape'\
             'file library/Shapefile directory//'
     else:
-        codebook_file_path = args['--input_dir'] + '//'
-        shapefile_file_path = args['--input_dir'] + '//'
+        codebook_file_path = args['--input_dir'] # + '\\' if user doesn't include already
+        shapefile_file_path = args['--input_dir'] # + '\\'
 
     # Initializing column values for input and output dataframe
     labels = ['nid', 'iso3', 'location_code', 'shapefile', 'point_count',
@@ -80,7 +81,7 @@ def main(args):
     try:
         file.resolve()
     except FileNotFoundError:
-        print('\n\nCodebook: ' + args['<codebook_name>'] + '   not present'
+        print('\n\nCodebook: ' + args['<codebook_name>'] + '   not present '
               'in\n\n' + codebook_file_path + '\n\n')
         return
     else:
@@ -89,7 +90,7 @@ def main(args):
 
     # Reading in metadata for each country - full name, iso3, stage
     # Needed for display output
-    cx = pd.read_csv('crosswalk1.csv')
+    cx = pd.read_csv("C:/Users/jc528/.spyder-py3/CB_and_SF/crosswalk1.csv")
 
     # Isolate NIDs with both point and polygon values
     grouped_df = df.groupby('nid')['point'].nunique().reset_index()
@@ -150,6 +151,7 @@ def main(args):
                 # Cutting out of shapefile loop for all identified
                 # discrepencies in codebook column
                 if shapefile in problem_shapefiles:
+                    #print("false", file=sys.stderr)
                     continue
                 elif shapefile.endswith('.shp'):
                     shapefile = shapefile[: -4]
@@ -335,8 +337,8 @@ def overlap_summary(labels, point_join, poly_join, counter, nid, iso,
         problem_df = pd.concat([problem_df, new_entry])
 
     # Outputs summary as csv
-    problem_df.to_csv(output_dir + iso + nid + shapefile + 'doc.csv',
-                      index=False)
+    # problem_df.to_csv(output_dir + iso + nid + shapefile + 'doc.csv',
+    #                   index=False)
 
 
 if __name__ == '__main__':
@@ -344,19 +346,20 @@ if __name__ == '__main__':
     arguments = docopt(__doc__, version='Overlap 1.0.1')
 
     if arguments['--runall']:
-        # Grab all codebook names from J Drive
-        os.chdir('J:/WORK//11_geospatial//05_survey shapefile'
-                 'library/codebooks//')
-        file_names = [x[:-4] for x in glob.glob('*.csv')]
+        if arguments['--input_dir']:
+            inputs = arguments['--input_dir']
+        else:
+            inputs = 'J:/WORK//11_geospatial//05_survey shape'\
+            'file library/codebooks'
 
+        file_names1 = [x[:-4] for x in glob.glob(inputs +'/*.csv' )]
+        file_names = [y.replace(inputs, '') for y in file_names1]
         # Loop through and process all codebooks
         for codebook_name in file_names:
             arguments['<codebook_name>'] = codebook_name
             main(arguments)
 
-        print('\n\nInfograph(s) and Summary Report(s) outputted to  '
-              + arguments['--output_dir'])
-        
+
     elif arguments['<codebook_name>']:
         main(arguments)
     else:
