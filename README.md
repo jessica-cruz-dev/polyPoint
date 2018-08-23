@@ -16,7 +16,7 @@ https://conda.io/docs/user-guide/getting-started.html
 ## Create Environment (with commands)
 Use the terminal or Anaconda Prompt for the following.
 
-Step 1. Execute the below statement to set up the required package dependancies. The name of your new environment is 'overlap_detect_env'
+Step 1. Create the environment with the below command. The name of your new environment is 'overlap_detect_env'.
 ```
 conda create -n overlap_detect_env python=3.5 geopandas=0.3.0 pandas=0.23.0 shapely=1.6.4 matplotlib=2.2.2 descartes=1.1.0 docopt=0.6.2 pillow=5.1.0
 ```
@@ -28,7 +28,7 @@ conda list
 ## Alterative Create Environment (with environment.yml file)
 Use the terminal or Anaconda Prompt for the following.
 
-Step 1. Create the enironment with the environment.yml file:
+Step 1. Create the enironment with the environment.yml file. The name of your new environment is 'overlap_detect_env'.
 ```
 conda env create -f environment.yml
 ```
