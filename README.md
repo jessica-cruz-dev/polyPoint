@@ -4,12 +4,11 @@ The purpose of the tool is to detect when spatial point and polygon entries over
 
 
 ## Installing
-Step 1. Install Conda
-
+Step 1. Install Conda: 
 A powerful package manager and environment manager that you use with command line commands at the Anaconda Prompt for Windows, or in a Terminal window for macOS or Linux.
 https://docs.anaconda.com/anaconda/install/
 
-Step 2. Get Conda Running
+Step 2. Get Conda Running: 
 Follow the sections Before you start, Contents, and starting conda. 
 https://conda.io/docs/user-guide/getting-started.html
 
