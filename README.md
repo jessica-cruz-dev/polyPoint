@@ -25,7 +25,7 @@ Step 2. Verify the new environment was installed correctly
 conda list
 ```
 
-## Alterative Create Environment (with environment.yml file)
+## Alternative Create Environment (with environment.yml file)
 Use the terminal or Anaconda Prompt for the following.
 
 Step 1. Create the enironment with the environment.yml file. The name of your new environment is 'overlap_detect_env'.
