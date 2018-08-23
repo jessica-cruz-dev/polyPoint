@@ -5,6 +5,7 @@ The purpose of the tool is to detect when spatial point and polygon entries over
 
 ## Installing
 Step 1. Install Conda
+
 A powerful package manager and environment manager that you use with command line commands at the Anaconda Prompt for Windows, or in a Terminal window for macOS or Linux.
 https://docs.anaconda.com/anaconda/install/
 
