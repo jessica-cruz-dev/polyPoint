@@ -9,7 +9,7 @@ A powerful package manager and environment manager that you use with command lin
 https://docs.anaconda.com/anaconda/install/
 
 Step 2. Get Conda Running: 
-Follow the sections Before you start, Contents, and starting conda. 
+Follow the sections 'Before you start', 'Contents' and 'Starting conda'. 
 https://conda.io/docs/user-guide/getting-started.html
 
 
