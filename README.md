@@ -15,7 +15,7 @@ https://docs.anaconda.com/anaconda/install/
 
 Step 2. Get Conda Running: 
 
-Follow the sections 'Before you start', 'Contents' and 'Starting conda'. 
+Follow the sections 'Before you start', 'Contents' and 'Starting conda' on Conda's offical user guide site. 
 ```
 https://conda.io/docs/user-guide/getting-started.html
 ```
