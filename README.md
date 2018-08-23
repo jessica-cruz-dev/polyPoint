@@ -38,14 +38,14 @@ conda list
 ## Alternative Create Environment (with environment.yml file)
 Use the terminal or Anaconda Prompt for the following.
 
-Step 1. Create the enironment with the environment.yml file. The name of your new environment is 'overlap_detect_env'.
+Step 1. Create the enironment with the environment.yml file provided. The name of your new environment is 'overlap_detect_env'.
 ```
 conda env create -f environment.yml
 ```
 Step 2. Activate the environment:
 ```
-Windows: activate overlap_detect_env
-macOS and Linux: source activate overlap_detect_env
+Windows:           activate overlap_detect_env
+macOS and Linux:   source activate overlap_detect_env
 ```
 Step 3. Verify the new environment was installed correctly 
 ```
