@@ -89,7 +89,7 @@ def main(args):
 
     # Reading in metadata for each country - full name, iso3, stage
     # Needed for display output
-    cx = pd.read_csv("C:/Users/jc528/.spyder-py3/CB_and_SF/crosswalk1.csv")
+    cx = pd.read_csv('crosswalk1.csv')
 
     # Isolate NIDs with both point and polygon values
     grouped_df = df.groupby('nid')['point'].nunique().reset_index()
