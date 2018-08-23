@@ -12,12 +12,14 @@ https://docs.anaconda.com/anaconda/install/
 ```
 
 
+
 Step 2. Get Conda Running: 
 
 Follow the sections 'Before you start', 'Contents' and 'Starting conda'. 
 ```
 https://conda.io/docs/user-guide/getting-started.html
 ```
+
 
 ## Create Environment (with commands)
 Use the terminal or Anaconda Prompt for the following.
@@ -30,6 +32,8 @@ Step 2. Verify the new environment was installed correctly
 ```
 conda list
 ```
+
+
 
 ## Alternative Create Environment (with environment.yml file)
 Use the terminal or Anaconda Prompt for the following.
