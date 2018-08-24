@@ -21,7 +21,7 @@ https://conda.io/docs/user-guide/getting-started.html
 ```
 
 
-## Alternative Create Environment (with environment.yml file)
+## Create Environment (with environment.yml file)
 Use the terminal or Anaconda Prompt for the following.
 
 Step 1. Create the enironment with the environment.yml file provided. The name of your new environment is 'overlap_detect_env'.
