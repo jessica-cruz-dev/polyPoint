@@ -35,15 +35,13 @@ import os
 
 
 def main(args):
-
-
     
     # Assigning output data directory based on user input
     if args['--output_dir'] is None:  # Current working directory
-        output_dir = os.getcwd() + '\\' # neccessary
+        output_dir = os.getcwd() 
         print(output_dir)
     else:
-        output_dir = args['--output_dir'] + '\\' # Dependant if user included \ 
+        output_dir = args['--output_dir'] 
 
     # Assigning input data directory based on user input
     if args['--input_dir'] is None:
@@ -52,8 +50,8 @@ def main(args):
         shapefile_file_path = 'J:/WORK//11_geospatial//05_survey shape'\
             'file library/Shapefile directory//'
     else:
-        codebook_file_path = args['--input_dir'] # + '\\' if user doesn't include already
-        shapefile_file_path = args['--input_dir'] # + '\\'
+        codebook_file_path = args['--input_dir'] 
+        shapefile_file_path = args['--input_dir'] 
 
     # Initializing column values for input and output dataframe
     labels = ['nid', 'iso3', 'location_code', 'shapefile', 'point_count',
@@ -90,7 +88,7 @@ def main(args):
 
     # Reading in metadata for each country - full name, iso3, stage
     # Needed for display output
-    cx = pd.read_csv("crosswalk1.csv")
+    cx = pd.read_csv("J:/temp/jessicac/data/crosswalk1.csv")
 
     # Isolate NIDs with both point and polygon values
     grouped_df = df.groupby('nid')['point'].nunique().reset_index()
@@ -350,7 +348,7 @@ if __name__ == '__main__':
             inputs = arguments['--input_dir']
         else:
             inputs = 'J:/WORK//11_geospatial//05_survey shape'\
-            'file library/codebooks'
+            'file library/codebooks/'
 
         file_names1 = [x[:-4] for x in glob.glob(inputs +'/*.csv' )]
         file_names = [y.replace(inputs, '') for y in file_names1]
@@ -358,7 +356,6 @@ if __name__ == '__main__':
         for codebook_name in file_names:
             arguments['<codebook_name>'] = codebook_name
             main(arguments)
-
 
     elif arguments['<codebook_name>']:
         main(arguments)
