@@ -88,7 +88,7 @@ def main(args):
 
     # Reading in metadata for each country - full name, iso3, stage
     # Needed for display output
-    cx = pd.read_csv("J:/temp/jessicac/data/crosswalk1.csv")
+    cx = pd.read_csv("J:/temp/jessicac/outputs/crosswalk1.csv")
 
     # Isolate NIDs with both point and polygon values
     grouped_df = df.groupby('nid')['point'].nunique().reset_index()
