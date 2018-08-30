@@ -2,6 +2,7 @@
 
 The purpose of the tool is to detect when spatial point and polygon entries overlap for the same NID. A codebook is entered and (if applicable) a list of affected NIDs are returned along with infographs and actionable insights for analysts to use to remedy the issue. 
 
+All file paths are currently linked to J drive locations: **J:/temp/jessicac/**, **J:/temp/jessicac/outputs/**, geospatial codebooks and geospatial shapefiles 
 
 ## Installing
 Step 1. Install Conda:
