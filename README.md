@@ -28,6 +28,7 @@ Step 1. Create the enironment with the environment.yml file provided. The name o
 ```
 conda env create -f environment.yml
 ```
+**Please note, installation of packages and thir dependencies will take a while**
 Step 2. Activate the environment:
 ```
 Windows:           activate overlap_detect_env
