@@ -40,18 +40,4 @@ macOS and Linux:   source activate overlap_detect_env
 Step 3. Verify the new environment was installed correctly 
 ```
 conda list
-```
 
-## Running the tool
-//multiple use cases with example arguments? 
-
-## Running the tests
-//Explain how to run automated tests for this system
-```
-pytest enter
-```
-### Break down end to end tests
-// Explain what these tests test and why
-```
-examples
-```
